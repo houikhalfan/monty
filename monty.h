@@ -3,8 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-#include <ctype.h>
+extern stack_t *stack;
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -33,20 +32,7 @@ typedef struct instruction_s
 char *opcode;
 void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
-extern int arg;
-/**
- * struct _file - opcoode and its function
- * @file: the opcode
- * @arg: function to handle the opcode
- * @buffer: pointer to
- * Description: opcode and its function
- */
-typedef struct _file
-{
-	FILE *file;
-	int arg;
-	char *buffer;
-} _file;
-extern  _file var;
-void _push(stack_t **stack);
+void push(stack_t **stack, unsigned int line_number);
+void pall(stack_t **stack, unsigned int line_number);
+int is_number(const char *str);
 #endif
