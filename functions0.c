@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "monty.h"
-
-
 stack_t *stack = NULL;
 /**
  * push - Pushes an element onto the stack.
@@ -18,15 +16,16 @@ stack_t *stack = NULL;
 void push(stack_t **stack, unsigned int line_number)
 {
 char *arg = strtok(NULL, " \t\n");
-
+int value;
+stack_t *new_node;
 if (arg == NULL || !is_number(arg))
 {
 fprintf(stderr, "L%u: usage: push integer\n", line_number);
 exit(EXIT_FAILURE);
 }
 
-int value = atoi(arg);
-stack_t *new_node = malloc(sizeof(stack_t));
+value = atoi(arg);
+new_node = malloc(sizeof(stack_t));
 if (new_node == NULL)
 {
 fprintf(stderr, "Error: malloc failed\n");
@@ -46,12 +45,11 @@ if (*stack != NULL)
 /**
  * pall - Prints all the values on the stack.
  * @stack: A pointer to a pointer to the top of the stack.
- * @line_number: The line number being executed from the file.
  *
  * Description: The opcode pall prints all the values on the stack,
  * starting from the top of
  */
-void pall(stack_t **stack, unsigned int line_number)
+void pall(stack_t **stack)
 {
 stack_t *current = *stack;
 while (current != NULL)
@@ -72,10 +70,11 @@ current = current->next;
  */
 int is_number(const char *str)
 {
+const char *ptr;
 if (str == NULL || *str == '\0')
 return (0);
 
-for (const char *ptr = str; *ptr != '\0'; ++ptr)
+for (ptr = str; *ptr != '\0'; ++ptr)
 {
 if (*ptr < '0' || *ptr > '9')
 return (0);
@@ -96,45 +95,43 @@ return (1);
  */
 int main(int argc, char *argv[])
 {
+stack_t *stack = NULL;
+FILE *file;
+char line[MAX_LINE_LENGTH];
+unsigned int line_number = 0;
+char *opcode;
 if (argc != 2)
 {
 fprintf(stderr, "USAGE: monty file\n");
 return (EXIT_FAILURE);
 }
 
-FILE *file = fopen(argv[1], "r");
+file = fopen(argv[1], "r");
 if (file == NULL)
 {
 fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 return (EXIT_FAILURE);
 }
 
-char *line = NULL;
-size_t len = 0;
-unsigned int line_number = 0;
-
-while (getline(&line, &len, file) != -1)
+while (fgets(line, MAX_LINE_LENGTH, file) != NULL)
 {
 line_number++;
-char *opcode = strtok(line, " \t\n");
+opcode = strtok(line, " \t\n");
 if (opcode != NULL)
 {
 if (strcmp(opcode, "push") == 0)
 push(&stack, line_number);
 else if (strcmp(opcode, "pall") == 0)
-pall(&stack, line_number);
+pall(&stack);
 else
 {
 fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
-free(line);
 fclose(file);
 return (EXIT_FAILURE);
 }
 }
 }
 
-free(line);
 fclose(file);
 return (EXIT_SUCCESS);
 }
-

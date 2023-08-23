@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-extern stack_t *stack;
+#define MAX_LINE_LENGTH 1024 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -19,6 +19,7 @@ int n;
 struct stack_s *prev;
 struct stack_s *next;
 } stack_t;
+extern stack_t *stack;
 /**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
@@ -33,6 +34,6 @@ char *opcode;
 void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 void push(stack_t **stack, unsigned int line_number);
-void pall(stack_t **stack, unsigned int line_number);
+void pall(stack_t **stack);
 int is_number(const char *str);
 #endif
