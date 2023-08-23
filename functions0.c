@@ -4,9 +4,9 @@
  * _push - push
  * @stack: linked lists
  */
-void _push(stack_s **stack)
+void _push(stack_t **stack)
 {
-stack_s *top;
+stack_t *top;
 top = malloc(sizeof(stack_s));
 if (top == NULL)
 {
