@@ -4,6 +4,11 @@
 #include "monty.h"
 
 stack_t *stack = NULL;
+void pop(stack_t **stack, unsigned int line_number);
+void swap(stack_t **stack, unsigned int line_number);
+void execute_file(const char *filename);
+int main(int argc, char *argv[]);
+
 /**
  * pop - Removes the top element of the stack.
  * @stack: Double pointer to the top of the stack.
@@ -45,6 +50,14 @@ temp = (*stack)->n;
 (*stack)->n = (*stack)->next->n;
 (*stack)->next->n = temp;
 }
+instruction_t instructions[] = {
+{"push", push},
+{"pall", pall},
+{"pint", pint},
+{"pop", pop},
+{"swap", swap},
+{NULL, NULL}
+};
 /**
  * execute_file - Read and execute Monty byte code commands from a file.
  * @filename: The name of the file containing Monty byte code commands.
