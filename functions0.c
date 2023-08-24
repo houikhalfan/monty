@@ -105,14 +105,12 @@ if (argc != 2)
 fprintf(stderr, "USAGE: monty file\n");
 return (EXIT_FAILURE);
 }
-
 file = fopen(argv[1], "r");
 if (file == NULL)
 {
 fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 return (EXIT_FAILURE);
 }
-
 while (fgets(line, MAX_LINE_LENGTH, file) != NULL)
 {
 line_number++;
@@ -123,6 +121,8 @@ if (strcmp(opcode, "push") == 0)
 push(&stack, line_number);
 else if (strcmp(opcode, "pall") == 0)
 pall(&stack);
+else if (strcmp(opcode, "pint") == 0)
+pint(&stack, line_number);
 else
 {
 fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
@@ -131,7 +131,23 @@ return (EXIT_FAILURE);
 }
 }
 }
-
 fclose(file);
 return (EXIT_SUCCESS);
+}
+/**
+ * pint - Prints the value at the top of the stack, followed by a new line.
+ * @stack: Double pointer to the top of the stack.
+ * @line_number: Line number being executed from the Monty byte code file.
+ *
+ * Description: If the stack is empty, prints an error message and exits.
+ */
+void pint(stack_t **stack, unsigned int line_number)
+{
+if (*stack == NULL)
+{
+fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
+exit(EXIT_FAILURE);
+}
+
+printf("%d\n", (*stack)->n);
 }
