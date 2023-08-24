@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "monty.h"
-stack_t *stack = NULL;
 /**
  * push - Pushes an element onto the stack.
  * @stack: A pointer to a pointer to the top of the stack.
@@ -82,58 +81,7 @@ return (0);
 
 return (1);
 }
-/**
- * main - Entry point of the Monty interpreter.
- * @argc: The number of command-line arguments.
- * @argv: An array of strings representing the arguments.
- *
- * Return: EXIT_SUCCESS on success, EXIT_FAILURE on failure.
- *
- * Description: The main function reads and executes Monty byte code
- * files line by line. It parses the opcode and its argument, executes
- * the corresponding function, and handles errors as specified.
- */
-int main(int argc, char *argv[])
-{
-stack_t *stack = NULL;
-FILE *file;
-char line[MAX_LINE_LENGTH];
-unsigned int line_number = 0;
-char *opcode;
-if (argc != 2)
-{
-fprintf(stderr, "USAGE: monty file\n");
-return (EXIT_FAILURE);
-}
-file = fopen(argv[1], "r");
-if (file == NULL)
-{
-fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-return (EXIT_FAILURE);
-}
-while (fgets(line, MAX_LINE_LENGTH, file) != NULL)
-{
-line_number++;
-opcode = strtok(line, " \t\n");
-if (opcode != NULL)
-{
-if (strcmp(opcode, "push") == 0)
-push(&stack, line_number);
-else if (strcmp(opcode, "pall") == 0)
-pall(&stack);
-else if (strcmp(opcode, "pint") == 0)
-pint(&stack, line_number);
-else
-{
-fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
-fclose(file);
-return (EXIT_FAILURE);
-}
-}
-}
-fclose(file);
-return (EXIT_SUCCESS);
-}
+
 /**
  * pint - Prints the value at the top of the stack, followed by a new line.
  * @stack: Double pointer to the top of the stack.
@@ -148,6 +96,14 @@ if (*stack == NULL)
 fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
 exit(EXIT_FAILURE);
 }
-
 printf("%d\n", (*stack)->n);
 }
+instruction_t instructions[] = 
+{
+{"push", push},
+{"pall", pall},
+{"pint", pint},
+{"pop", pop},
+{"swap", swap},
+{NULL, NULL}
+};
