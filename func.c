@@ -23,3 +23,16 @@ top = *stack;
 (*stack)->n += top->n;
 free(top);
 }
+/**
+ * nop - Doesn't perform any operation.
+ * @stack: Double pointer to the head of the stack
+ * @line_number: Line number of the opcode in the Monty file
+ *
+ * Description: This opcode does nothing. It is used to fulfill the requirement
+ * of having a valid opcode in certain cases.
+ */
+void nop(stack_t **stack, unsigned int line_number)
+{
+(void)stack;
+(void)line_number;
+}

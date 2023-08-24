@@ -40,7 +40,7 @@ free(temp);
 */
 void swap(stack_t **stack, unsigned int line_number)
 {
-int temp;	
+int temp;
 if (*stack == NULL || (*stack)->next == NULL)
 {
 fprintf(stderr, "L%u: can't swap, stack too short\n", line_number);
@@ -57,6 +57,7 @@ instruction_t instructions[] = {
 {"pop", pop},
 {"swap", swap},
 {"add", add},
+{"nop", nop},
 {NULL, NULL}
 };
 /**
