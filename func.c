@@ -53,7 +53,7 @@ tmp = *stack;
 free(tmp);
 }
 /**
- * div - div function
+ * _div - div function
  * @stack : pointer to the stack
  * @line_number: line number
  */
@@ -67,7 +67,7 @@ while (t != NULL)
 length++;
 t = t->next;
 }
-if (length < 2 ||*stack == NULL || (*stack)->next == NULL)
+if (length < 2 || *stack == NULL || (*stack)->next == NULL)
 {
 fprintf(stderr, "L%u: can't div, stack too short\n", line_number);
 exit(EXIT_FAILURE);

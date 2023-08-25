@@ -44,7 +44,7 @@ if (*stack != NULL)
 /**
  * pall - Prints all the values on the stack.
  * @stack: A pointer to a pointer to the top of the stack.
- *
+ * @line_number: The line number being executed from the file
  * Description: The opcode pall prints all the values on the stack,
  * starting from the top of
  */
