@@ -60,7 +60,14 @@ free(tmp);
 void _div(stack_t **stack, unsigned int line_number)
 {
 stack_t *tmp;
-if (*stack == NULL || (*stack)->next == NULL)
+int length = 0;
+stack_t *t = *stack;
+while (t != NULL)
+{
+length++;
+t = t->next;
+}
+if (length < 2 ||*stack == NULL || (*stack)->next == NULL)
 {
 fprintf(stderr, "L%u: can't div, stack too short\n", line_number);
 exit(EXIT_FAILURE);
