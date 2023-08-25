@@ -6,7 +6,7 @@
  */
 void mod(stack_t **stack, unsigned int line_number)
 {
-stack_t *top
+stack_t *t;
 if (*stack == NULL || (*stack)->next == NULL)
 {
 fprintf(stderr, "L%u: can't mod, stack too short\n", line_number);
