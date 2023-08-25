@@ -70,15 +70,11 @@ t = t->next;
 if (length < 2 ||*stack == NULL || (*stack)->next == NULL)
 {
 fprintf(stderr, "L%u: can't div, stack too short\n", line_number);
-fclose(file);
-free_stack(*stack);
 exit(EXIT_FAILURE);
 }
 if ((*stack)->n == 0)
 {
 fprintf(stderr, "L%u: division by zero\n", line_number);
-fclose(file);
-free_stack(*stack);
 exit(EXIT_FAILURE);
 }
 tmp = *stack;
